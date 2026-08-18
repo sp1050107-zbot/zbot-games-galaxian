@@ -39,8 +39,8 @@
 
 ### main 分支 (Production)
 - **用途**：生產環境，穩定版本
-- **部署目標**：`zbot-games-galaxian.pages.dev`
-- **Wrangler 項目**：`zbot-games-galaxian`
+- **部署目標**：`zbot-games-galaxian-prod.pages.dev`
+- **Wrangler 項目**：`zbot-games-galaxian-prod`
 - **觸發條件**：
   - `git push origin main`
   - PR 合併到 main
@@ -48,7 +48,7 @@
 
 ### staging 分支 (Staging)
 - **用途**：測試環境，完整功能驗收
-- **部署目標**：`staging.zbot-games-galaxian.pages.dev` (待建立)
+- **部署目標**：`zbot-games-galaxian-stg.pages.dev`
 - **Wrangler 項目**：`zbot-games-galaxian-stg`
 - **觸發條件**：
   - `git push origin staging`
@@ -57,7 +57,7 @@
 
 ### develop 分支 (Development)
 - **用途**：開發環境，持續整合
-- **部署目標**：`dev.zbot-games-galaxian.pages.dev` (待建立)
+- **部署目標**：`zbot-games-galaxian-dev.pages.dev`
 - **Wrangler 項目**：`zbot-games-galaxian-dev`
 - **觸發條件**：
   - `git push origin develop`
@@ -97,7 +97,7 @@ git push -u origin staging
 |---------|--------|------|
 | `zbot-games-galaxian-dev` | 21a0246272ef2a34fb908aabdbf60516 | Development |
 | `zbot-games-galaxian-stg` | 21a0246272ef2a34fb908aabdbf60516 | Staging |
-| `zbot-games-galaxian` | 21a0246272ef2a34fb908aabdbf60516 | Production |
+| `zbot-games-galaxian-prod` | 21a0246272ef2a34fb908aabdbf60516 | Production |
 
 ### 4️⃣ 配置 GitHub Environments
 
@@ -157,7 +157,7 @@ git merge feature/add-new-feature
 git push origin develop
 
 # ➜ GitHub Actions 自動部署到 Dev
-# ✅ https://dev.zbot-games-galaxian.pages.dev
+# ✅ https://zbot-games-galaxian-dev.pages.dev
 ```
 
 ### 測試流程（Staging 環境）
@@ -169,7 +169,7 @@ git pull origin develop
 git push origin staging
 
 # 2. GitHub Actions 自動部署到 Staging
-# ✅ https://staging.zbot-games-galaxian.pages.dev
+# ✅ https://zbot-games-galaxian-stg.pages.dev
 
 # 3. 進行完整測試
 # - 功能測試
@@ -201,7 +201,7 @@ git merge staging
 git push origin main
 
 # ➜ GitHub Actions 自動部署到 Production
-# ✅ https://zbot-games-galaxian.pages.dev
+# ✅ https://zbot-games-galaxian-prod.pages.dev
 ```
 
 ---
@@ -252,22 +252,22 @@ project_name: zbot-games-galaxian
 
 ```bash
 # 測試 Dev 環境
-curl -I https://dev.zbot-games-galaxian.pages.dev
+curl -I https://zbot-games-galaxian-dev.pages.dev
 
 # 測試 Staging 環境
-curl -I https://staging.zbot-games-galaxian.pages.dev
+curl -I https://zbot-games-galaxian-stg.pages.dev
 
 # 測試 Production 環境
-curl -I https://zbot-games-galaxian.pages.dev
+curl -I https://zbot-games-galaxian-prod.pages.dev
 
 # 所有應返回 200 OK
 ```
 
 ### 瀏覽器訪問
 
-- **Dev**: https://dev.zbot-games-galaxian.pages.dev
-- **Staging**: https://staging.zbot-games-galaxian.pages.dev
-- **Production**: https://zbot-games-galaxian.pages.dev
+- **Dev**: https://zbot-games-galaxian-dev.pages.dev
+- **Staging**: https://zbot-games-galaxian-stg.pages.dev
+- **Production**: https://zbot-games-galaxian-prod.pages.dev
 
 ---
 
