@@ -1,0 +1,2 @@
+mkdir -p .claude/agents .claude/commands .claude/skills .claude/hooks
+touch CLAUDE.md

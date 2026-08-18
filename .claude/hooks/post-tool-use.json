@@ -1,0 +1,100 @@
+{
+  "version": "1.0",
+  "description": "Auto-format and lint after code modifications",
+  "hooks": [
+    {
+      "name": "auto-format-after-edit",
+      "trigger": "post-tool-use",
+      "condition": {
+        "tool": "Edit",
+        "file_pattern": "^src/.*\\.(ts|tsx|js|jsx)$"
+      },
+      "actions": [
+        {
+          "type": "command",
+          "command": "npm run format -- --write {FILE_PATH}",
+          "description": "Format TypeScript/JavaScript file with Prettier"
+        },
+        {
+          "type": "command",
+          "command": "npm run lint -- --fix {FILE_PATH}",
+          "description": "Lint and auto-fix ESLint issues"
+        }
+      ]
+    },
+    {
+      "name": "auto-format-json",
+      "trigger": "post-tool-use",
+      "condition": {
+        "tool": "Edit",
+        "file_pattern": "^.*\\.json$"
+      },
+      "actions": [
+        {
+          "type": "command",
+          "command": "npm run format -- --write {FILE_PATH}",
+          "description": "Format JSON file"
+        }
+      ]
+    },
+    {
+      "name": "verify-build-after-src-change",
+      "trigger": "post-tool-use",
+      "condition": {
+        "tool": "Edit",
+        "file_pattern": "^src/.*\\.ts$"
+      },
+      "actions": [
+        {
+          "type": "command",
+          "command": "npm run build --dry-run",
+          "description": "Verify TypeScript compilation without output"
+        }
+      ],
+      "options": {
+        "showOutput": "onError",
+        "timeout": 30000,
+        "failOnError": false
+      }
+    },
+    {
+      "name": "check-package-changes",
+      "trigger": "post-tool-use",
+      "condition": {
+        "tool": "Edit",
+        "file_pattern": "^package\\.json$"
+      },
+      "actions": [
+        {
+          "type": "command",
+          "command": "npm ci --dry-run",
+          "description": "Verify package.json validity without installation"
+        }
+      ]
+    },
+    {
+      "name": "validate-wrangler-config",
+      "trigger": "post-tool-use",
+      "condition": {
+        "tool": "Edit",
+        "file_pattern": "^wrangler\\.toml$"
+      },
+      "actions": [
+        {
+          "type": "command",
+          "command": "wrangler publish --dry-run",
+          "description": "Validate Wrangler configuration"
+        }
+      ],
+      "options": {
+        "showOutput": "onError"
+      }
+    }
+  ],
+  "config": {
+    "autoFormatOnSave": true,
+    "showNotifications": "errors_only",
+    "parallel": false,
+    "continueOnError": true
+  }
+}

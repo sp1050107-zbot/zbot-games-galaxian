@@ -1,0 +1,45 @@
+{
+  "name": "zbot-games-galaxian",
+  "version": "1.0.0",
+  "description": "Classic Galaxian arcade game recreation with HTML5 Canvas",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "wrangler pages dev dist",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint src --ext .ts,.tsx",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage",
+    "deploy": "npm run build && wrangler pages deploy dist",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": [
+    "galaxian",
+    "arcade",
+    "game",
+    "canvas",
+    "html5"
+  ],
+  "author": "sp1050107",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "@vitest/coverage-v8": "^1.0.0",
+    "@vitest/ui": "^1.0.0",
+    "eslint": "^8.50.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "prettier": "^3.0.0",
+    "typescript": "^5.0.0",
+    "vite": "^5.0.0",
+    "vitest": "^1.0.0",
+    "wrangler": "^3.20.0"
+  },
+  "dependencies": {}
+}

@@ -1,0 +1,72 @@
+name = "zbot-games-galaxian"
+type = "javascript"
+compatibility_date = "2025-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+account_id = "YOUR_ACCOUNT_ID"
+project_name = "zbot-games-galaxian"
+
+[build]
+command = "npm run build"
+cwd = "."
+
+[site]
+bucket = "./dist"
+
+# Development Environment
+[env.development]
+name = "zbot-games-galaxian-dev"
+routes = [
+  { pattern = "localhost:*", zone_id = "" }
+]
+vars = { ENVIRONMENT = "development", API_URL = "http://localhost:8788" }
+
+# Preview/Staging Environment
+[env.preview]
+name = "zbot-games-galaxian-preview"
+routes = [
+  { pattern = "*.zbot-games-galaxian-preview.pages.dev", zone_id = "" }
+]
+vars = { ENVIRONMENT = "preview", API_URL = "https://preview.zbot-games-galaxian.pages.dev" }
+
+# Production Environment
+[env.production]
+name = "zbot-games-galaxian"
+routes = [
+  { pattern = "zbot-games-galaxian.pages.dev", zone_id = "" },
+  { pattern = "www.zbot-games-galaxian.pages.dev", zone_id = "" }
+]
+vars = { ENVIRONMENT = "production", API_URL = "https://zbot-games-galaxian.pages.dev" }
+
+# Cache Configuration
+[[routes]]
+pattern = "*.html"
+cache_control = "no-cache, no-store, must-revalidate"
+
+[[routes]]
+pattern = "*.js"
+cache_control = "public, max-age=31536000, immutable"
+
+[[routes]]
+pattern = "*.css"
+cache_control = "public, max-age=31536000, immutable"
+
+[[routes]]
+pattern = "*.png"
+cache_control = "public, max-age=31536000, immutable"
+
+[[routes]]
+pattern = "*.jpg"
+cache_control = "public, max-age=31536000, immutable"
+
+[[routes]]
+pattern = "*.woff2"
+cache_control = "public, max-age=31536000, immutable"
+
+# Analytics
+[analytics]
+enabled = true
+
+# Observability
+[observability]
+enabled = true
