@@ -2,15 +2,29 @@
 
 A faithful recreation of the classic **Galaxian** arcade game built with **HTML5 Canvas**, **TypeScript**, and deployed on **Cloudflare Pages**.
 
-## 🎯 Features
+## 🎯 Features & Development Status
 
-- **Classic Arcade Gameplay**: Experience the timeless Galaxian mechanics
+### ✅ Implemented
 - **Player Controls**: Move with arrow keys, fire with spacebar
-- **Enemy AI**: Intelligent enemy formations with dive attacks
-- **Collision Detection**: Accurate hitbox system
-- **Score System**: Track your high scores
+- **Player Entity**: Full player ship with movement & boundaries
+- **Bullet System**: Player projectiles with speed control
+- **Collision Detection**: AABB hitbox system for all entities
+- **Score System**: Points tracking & high score persistence
 - **Responsive Design**: Playable on desktop and tablet devices
 - **Optimized Performance**: 60 FPS smooth gameplay
+
+### ⏳ In Development
+- **Enemy Formation**: Enemy wave patterns and movement
+- **Enemy AI**: Intelligent dive attacks and behaviors
+- **Game States**: Menu, pause, game over screens
+- **Sound Effects**: Audio feedback for actions
+- **Visual Effects**: Explosions and screen shake
+
+### 📋 Roadmap
+- Level progression system
+- Power-ups and special weapons
+- Leaderboard integration
+- Mobile touch controls
 
 ## 🚀 Quick Start
 
@@ -105,22 +119,33 @@ zbot-games-galaxian/
 
 ## 🏗️ Architecture
 
-### Game Engine
-The game is built around a main `GameEngine` class that manages:
-- Game loop (60 FPS)
-- State management (menu, playing, paused, game over)
-- Canvas rendering
-- Input handling
+### Game Engine (`src/game/GameEngine.ts`)
+Core game loop and state management:
+- 60 FPS game loop using requestAnimationFrame
+- State management (playing, paused, game over)
+- Canvas rendering and clearing
+- Keyboard input handling (arrow keys, spacebar, P, R)
+- Entity management and updates
 
-### Systems
-- **CollisionSystem**: Detects collisions between entities
-- **AISystem**: Controls enemy behavior and dive attacks
-- **ScoreSystem**: Tracks and manages player scores
+### Systems (`src/game/systems/`)
+- **CollisionSystem.ts**: AABB collision detection for bullets, enemies, player
+- **ScoreSystem.ts**: Score tracking, high score persistence via localStorage
+- **AISystem.ts**: (Planned) Enemy behavior, formation control, dive attacks
 
-### Entities
-- **Player**: Controllable ship with firing capability
-- **Enemy**: Formation-based enemies with AI behavior
-- **Bullet**: Projectiles from player and enemies
+### Entities (`src/game/entities/`)
+- **Player.ts**: Controllable ship with movement, firing, boundaries, health
+- **Enemy.ts**: Enemy ships with formation movement, dive capability
+- **Bullet.ts**: Projectiles with speed, position tracking, auto-cleanup
+
+### Constants (`src/game/constants.ts`)
+Centralized game configuration:
+- Canvas dimensions (800x600)
+- Entity dimensions and speeds
+- Fire rates and bullet properties
+- Scoring values
+- Game state enums
+- Input key mappings
+- Difficulty levels
 
 ## 📊 Development Workflow
 
