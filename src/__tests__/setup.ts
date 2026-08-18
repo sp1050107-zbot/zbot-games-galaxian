@@ -54,7 +54,7 @@ export const createMockCanvas = (width = 800, height = 600): HTMLCanvasElement =
 // Cleanup after each test
 afterEach(() => {
   // Clear any global state if needed
-  jest.clearAllMocks();
+  // jest.clearAllMocks(); // Using Vitest, not Jest
 });
 
 // Custom matchers

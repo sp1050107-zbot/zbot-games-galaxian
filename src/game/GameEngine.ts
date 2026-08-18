@@ -239,7 +239,8 @@ export class GameEngine {
    * Render debug information (FPS counter)
    */
   private renderDebugInfo(): void {
-    if (import.meta.env.DEV) {
+    // Only show debug info in development mode
+    if (typeof process !== "undefined" && process.env.NODE_ENV === "development") {
       this.ctx.fillStyle = "#00FF00";
       this.ctx.font = "12px monospace";
       this.ctx.textAlign = "left";

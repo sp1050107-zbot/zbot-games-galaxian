@@ -21,22 +21,6 @@ export default defineConfig({
     target: "ES2020",
     minify: "terser",
     sourcemap: true,
-    rollupOptions: {
-      input: {
-        main: resolve(__dirname, "src/index.html"),
-      },
-      output: {
-        manualChunks: {
-          game: ["src/game/GameEngine.ts"],
-          entities: ["src/game/entities/Player.ts", "src/game/entities/Enemy.ts"],
-          systems: [
-            "src/game/systems/CollisionSystem.ts",
-            "src/game/systems/AISystem.ts",
-            "src/game/systems/ScoreSystem.ts",
-          ],
-        },
-      },
-    },
   },
   server: {
     port: 3000,
