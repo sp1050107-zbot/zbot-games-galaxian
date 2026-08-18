@@ -112,8 +112,6 @@ if (document.readyState === "loading") {
 }
 
 // Export for debugging
-if (typeof window !== "undefined") {
-
 // Export for debugging
 if (typeof window !== "undefined") {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
