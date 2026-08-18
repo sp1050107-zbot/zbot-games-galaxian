@@ -29,8 +29,8 @@ function initializeGame(): void {
   // Start the game
   gameEngine.start();
 
-  console.log("🎮 Galaxian game initialized successfully");
-  console.log(`Canvas: ${CANVAS_WIDTH}x${CANVAS_HEIGHT}`);
+  console.warn("🎮 Galaxian game initialized successfully");
+  console.warn(`Canvas: ${CANVAS_WIDTH}x${CANVAS_HEIGHT}`);
 }
 
 /**
@@ -70,7 +70,10 @@ function setupUIEventListeners(): void {
   ) as HTMLButtonElement;
   if (settingsBtn) {
     settingsBtn.addEventListener("click", () => {
-      console.log("Settings clicked - TODO: implement settings UI");
+      // TODO: implement settings UI
+      if (gameEngine) {
+        console.warn("Settings UI not yet implemented");
+      }
     });
   }
 }
@@ -110,5 +113,6 @@ if (document.readyState === "loading") {
 
 // Export for debugging
 if (typeof window !== "undefined") {
-  (window as any).gameEngine = gameEngine;
+  type WindowWithGameEngine = Window & { gameEngine: GameEngine | null };
+  (window as WindowWithGameEngine).gameEngine = gameEngine;
 }
