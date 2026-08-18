@@ -3,8 +3,25 @@ type = "javascript"
 compatibility_date = "2025-01-01"
 compatibility_flags = ["nodejs_compat"]
 
-account_id = "YOUR_ACCOUNT_ID"
+# Account ID from sp1050107@gmail.com Cloudflare account
+account_id = "21a0246272ef2a34fb908aabdbf60516"
 project_name = "zbot-games-galaxian"
+
+# Environment definitions for dev/stg/prod
+[env.dev]
+name = "games-galaxian-dev"
+routes = [{ pattern = "games-galaxian-dev.sp1050107.workers.dev" }]
+vars = { ENVIRONMENT = "development", API_BASE = "https://games-galaxian-dev.sp1050107.workers.dev" }
+
+[env.stg]
+name = "games-galaxian-stg"
+routes = [{ pattern = "games-galaxian-stg.sp1050107.workers.dev" }]
+vars = { ENVIRONMENT = "staging", API_BASE = "https://games-galaxian-stg.sp1050107.workers.dev" }
+
+[env.prod]
+name = "games-galaxian-prod"
+routes = [{ pattern = "games-galaxian-prod.sp1050107.workers.dev" }]
+vars = { ENVIRONMENT = "production", API_BASE = "https://games-galaxian-prod.sp1050107.workers.dev" }
 
 [build]
 command = "npm run build"
