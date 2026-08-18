@@ -113,6 +113,6 @@ if (document.readyState === "loading") {
 
 // Export for debugging
 if (typeof window !== "undefined") {
-  const globalWindow = window as Record<string, unknown>;
-  globalWindow.gameEngine = gameEngine;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (window as any).gameEngine = gameEngine;
 }
