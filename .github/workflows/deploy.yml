@@ -12,6 +12,11 @@ on:
       - staging
       - develop
 
+permissions:
+  contents: read
+  deployments: write
+  pages: write
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
