@@ -34,16 +34,16 @@ jobs:
         run: |
           if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
             echo "environment=production" >> $GITHUB_OUTPUT
-            echo "project_name=zbot-games-galaxian" >> $GITHUB_OUTPUT
-            echo "preview_url=https://zbot-games-galaxian.pages.dev" >> $GITHUB_OUTPUT
+            echo "project_name=zbot-games-galaxian-prod" >> $GITHUB_OUTPUT
+            echo "preview_url=https://zbot-games-galaxian-prod.pages.dev" >> $GITHUB_OUTPUT
           elif [[ "${{ github.ref }}" == "refs/heads/staging" ]]; then
             echo "environment=staging" >> $GITHUB_OUTPUT
             echo "project_name=zbot-games-galaxian-stg" >> $GITHUB_OUTPUT
-            echo "preview_url=https://staging.zbot-games-galaxian.pages.dev" >> $GITHUB_OUTPUT
+            echo "preview_url=https://zbot-games-galaxian-stg.pages.dev" >> $GITHUB_OUTPUT
           else
             echo "environment=development" >> $GITHUB_OUTPUT
             echo "project_name=zbot-games-galaxian-dev" >> $GITHUB_OUTPUT
-            echo "preview_url=https://dev.zbot-games-galaxian.pages.dev" >> $GITHUB_OUTPUT
+            echo "preview_url=https://zbot-games-galaxian-dev.pages.dev" >> $GITHUB_OUTPUT
           fi
 
   lint-and-test:
