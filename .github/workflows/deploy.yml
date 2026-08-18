@@ -1,13 +1,15 @@
-name: 🚀 Deploy to Cloudflare Pages
+name: 🚀 Deploy to Cloudflare Pages (Dev/Stg/Prod)
 
 on:
   push:
     branches:
-      - main
-      - develop
+      - main      # Production
+      - staging   # Staging
+      - develop   # Development
   pull_request:
     branches:
       - main
+      - staging
       - develop
 
 concurrency:
@@ -16,9 +18,34 @@ concurrency:
 
 env:
   NODE_VERSION: "18"
-  CLOUDFLARE_PROJECT_NAME: "zbot-games-galaxian"
 
 jobs:
+  # 確定目標環境
+  determine-environment:
+    name: 🎯 Determine Target Environment
+    runs-on: ubuntu-latest
+    outputs:
+      environment: ${{ steps.env.outputs.environment }}
+      project_name: ${{ steps.env.outputs.project_name }}
+      preview_url: ${{ steps.env.outputs.preview_url }}
+    steps:
+      - name: 🔍 Detect Environment
+        id: env
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+            echo "environment=production" >> $GITHUB_OUTPUT
+            echo "project_name=zbot-games-galaxian" >> $GITHUB_OUTPUT
+            echo "preview_url=https://zbot-games-galaxian.pages.dev" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.ref }}" == "refs/heads/staging" ]]; then
+            echo "environment=staging" >> $GITHUB_OUTPUT
+            echo "project_name=zbot-games-galaxian-stg" >> $GITHUB_OUTPUT
+            echo "preview_url=https://staging.zbot-games-galaxian.pages.dev" >> $GITHUB_OUTPUT
+          else
+            echo "environment=development" >> $GITHUB_OUTPUT
+            echo "project_name=zbot-games-galaxian-dev" >> $GITHUB_OUTPUT
+            echo "preview_url=https://dev.zbot-games-galaxian.pages.dev" >> $GITHUB_OUTPUT
+          fi
+
   lint-and-test:
     name: 🔍 Lint & Test
     runs-on: ubuntu-latest
@@ -52,14 +79,16 @@ jobs:
         with:
           files: ./coverage/coverage-final.json
           flags: unittests
-          name: codecov-umbrella
           fail_ci_if_error: false
 
   build:
     name: 🏗️ Build & Deploy
     runs-on: ubuntu-latest
-    needs: lint-and-test
+    needs: [determine-environment, lint-and-test]
     if: github.event_name == 'push'
+    environment:
+      name: ${{ needs.determine-environment.outputs.environment }}
+      url: ${{ needs.determine-environment.outputs.preview_url }}
     steps:
       - name: 📥 Checkout code
         uses: actions/checkout@v4
@@ -90,50 +119,17 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: ${{ env.CLOUDFLARE_PROJECT_NAME }}
+          projectName: ${{ needs.determine-environment.outputs.project_name }}
           directory: dist
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: 🎉 Deployment Success
+      - name: 📢 Deployment Notification
         run: |
-          echo "✅ Deployment successful!"
+          echo "✅ Deployment Successful!"
           echo ""
-          echo "🔗 Live URL:"
-          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
-            echo "   https://${{ env.CLOUDFLARE_PROJECT_NAME }}.pages.dev"
-          else
-            echo "   https://${{ github.head_ref || github.ref_name }}.${{ env.CLOUDFLARE_PROJECT_NAME }}.pages.dev"
-          fi
-
-  preview:
-    name: 👁️ Preview Deployment (PR)
-    runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
-    steps:
-      - name: 📥 Checkout code
-        uses: actions/checkout@v4
-
-      - name: 🔧 Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: "npm"
-
-      - name: 📦 Install dependencies
-        run: npm ci
-
-      - name: 🏗️ Build project
-        run: npm run build
-
-      - name: 🌐 Deploy Preview to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: ${{ env.CLOUDFLARE_PROJECT_NAME }}
-          directory: dist
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.head_ref || github.ref_name }}
+          echo "🌍 Environment: ${{ needs.determine-environment.outputs.environment }}"
+          echo "📁 Project: ${{ needs.determine-environment.outputs.project_name }}"
+          echo "🔗 URL: ${{ needs.determine-environment.outputs.preview_url }}"
 
   security-scan:
     name: 🔒 Security Scan
