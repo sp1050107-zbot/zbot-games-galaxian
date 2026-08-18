@@ -113,6 +113,6 @@ if (document.readyState === "loading") {
 
 // Export for debugging
 if (typeof window !== "undefined") {
-  type WindowWithGameEngine = Window & { gameEngine: GameEngine | null };
-  (window as WindowWithGameEngine).gameEngine = gameEngine;
+  const globalWindow = window as Record<string, unknown>;
+  globalWindow.gameEngine = gameEngine;
 }
